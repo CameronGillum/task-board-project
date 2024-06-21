@@ -2,6 +2,9 @@
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
 
+console.log("Initial task list:", taskList);
+console.log("Initial nextId:", nextId);
+
 // Generate a unique task id
 function generateTaskId() {
   return nextId++;
@@ -11,10 +14,12 @@ function generateTaskId() {
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(taskList));
   localStorage.setItem("nextId", JSON.stringify(nextId));
+  console.log("Tasks saved to localStorage:", taskList);
 }
 
 // Create a task card
 function createTaskCard(task) {
+  console.log("Creating task card for:", task);
   const card = $(`
     <div class="card task-card mb-2" data-id="${task.id}">
       <div class="card-body">
@@ -44,10 +49,12 @@ function updateTaskCardColor(card, dueDate) {
 
 // Render the task list and make cards draggable
 function renderTaskList() {
+  console.log("Rendering task list...");
   $('#todo-cards, #in-progress-cards, #done-cards').empty();
 
   taskList.forEach(task => {
     const card = createTaskCard(task);
+    console.log("Appending card to", `#${task.status}-cards`, card);
     $(`#${task.status}-cards`).append(card);
   });
 
@@ -62,16 +69,20 @@ function renderTaskList() {
     accept: '.task-card',
     drop: handleDrop
   });
+
+  console.log("Task list rendered:", taskList);
 }
 
 // Handle adding a new task
 function handleAddTask(event) {
   event.preventDefault();
+  console.log("Adding new task...");
 
   const title = $('#taskTitle').val();
   const dueDate = $('#dueDate').val();
 
   if (!title || !dueDate) {
+    console.log("Invalid task details:", title, dueDate);
     return;
   }
 
@@ -88,20 +99,26 @@ function handleAddTask(event) {
 
   $('#formModal').modal('hide');
   $('#taskForm')[0].reset();
+
+  console.log("New task added:", task);
 }
 
 // Handle deleting a task
 function handleDeleteTask(event) {
+  console.log("Deleting task...");
   const card = $(event.target).closest('.task-card');
   const id = card.data('id');
 
   taskList = taskList.filter(task => task.id !== id);
   saveTasks();
   renderTaskList();
+
+  console.log("Task deleted:", id);
 }
 
 // Handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+  console.log("Dropping task...");
   const card = ui.helper;
   const id = card.data('id');
   const newStatus = $(event.target).closest('.lane').attr('id').replace('-cards', '');
@@ -115,9 +132,12 @@ function handleDrop(event, ui) {
 
   saveTasks();
   renderTaskList();
+
+  console.log("Task moved to new status:", id, newStatus);
 }
 
 $(document).ready(function () {
+  console.log("Document ready...");
   renderTaskList();
 
   $('#taskForm').on('submit', handleAddTask);
@@ -131,4 +151,6 @@ $(document).ready(function () {
     accept: '.task-card',
     drop: handleDrop
   });
+
+  console.log("Event handlers set up.");
 });
