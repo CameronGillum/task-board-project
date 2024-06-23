@@ -23,3 +23,6 @@ https://github.com/CameronGillum
 ## License
 
 N/A
+
+## Screenshot
+![image](https://github.com/CameronGillum/task-board-project/assets/170665036/cd9b7885-7d13-45a0-9c84-3c1fd734c59c)
