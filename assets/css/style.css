@@ -14,3 +14,17 @@ body {
 .task-card:hover {
   cursor: grab;
 }
+
+.bs-danger {
+  background-color: #dc3545; /* Customize as per your design */
+  color: white; /* Text color */
+}
+
+.bs-danger-bg-subtle {
+  background-color: #f8d7da; /* Subtle danger background color */
+  /* Adjust opacity or other styles as needed */
+}
+
+.fs-5 {
+  font-size: 1.25rem; /* Adjust font size as needed */
+}
